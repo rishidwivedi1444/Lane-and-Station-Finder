@@ -27,8 +27,6 @@ body{
     overflow-x:hidden;
 }
 
-/* BACKGROUND GLOW */
-
 .glow{
     position:fixed;
     width:500px;
@@ -50,8 +48,6 @@ body{
     right:-150px;
 }
 
-/* CONTAINER */
-
 .container{
     max-width:1400px;
     margin:auto;
@@ -67,7 +63,7 @@ body{
 
 .brand{
     color:#22c55e;
-    font-size:40px;
+    font-size:44px;
     font-weight:800;
     letter-spacing:4px;
     text-shadow:0 0 25px rgba(34,197,94,.6);
@@ -75,7 +71,7 @@ body{
 }
 
 .sub-title{
-    font-size:28px;
+    font-size:30px;
     color:#e2e8f0;
     margin-bottom:10px;
     font-weight:600;
@@ -90,7 +86,7 @@ body{
 
 .top-cards{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
     gap:22px;
     margin-bottom:35px;
 }
@@ -173,15 +169,13 @@ body{
     transform:translateY(-2px) scale(1.03);
 }
 
-/* RESULTS */
+/* RESULT */
 
 .results{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:22px;
 }
-
-/* SMALL INFO CARD */
 
 .info-card{
     background:rgba(15,23,42,.82);
@@ -296,19 +290,37 @@ body{
 
     <div class="top-cards">
 
+        <!-- SSC ZONE -->
+
         <div class="top-card">
+
             <h2 id="sscCount">0</h2>
-            <span>SSC Zone Count</span>
+
+            <span style="display:block;margin-bottom:16px;">
+                SSC Zone Count
+            </span>
+
+            <div id="sscBadges"
+            style="
+            display:flex;
+            flex-wrap:wrap;
+            gap:10px;
+            margin-top:10px;
+            ">
+            </div>
+
         </div>
 
+        <!-- TOTAL HUB -->
+
         <div class="top-card">
+
             <h2 id="totalRecords">0</h2>
-            <span>Total Hubs</span>
-        </div>
 
-        <div class="top-card">
-            <h2>LIVE</h2>
-            <span>Google Sheet Connected</span>
+            <span>
+                Total Hubs
+            </span>
+
         </div>
 
     </div>
@@ -391,20 +403,76 @@ async function loadData(){
 
         });
 
-        // TOTAL HUB COUNT
+        // TOTAL HUB
 
         document.getElementById("totalRecords").innerText =
         sheetData.length;
 
-        // SSC ZONE COUNT
+        // SSC ZONE COUNTS
 
-        const sscZones =
-        new Set(sheetData.map(item => item["SSC Zone"]));
+        const zoneCounts = {};
+
+        sheetData.forEach(item => {
+
+            const zone = item["SSC Zone"] || "Unknown";
+
+            if(!zoneCounts[zone]){
+
+                zoneCounts[zone] = 0;
+            }
+
+            zoneCounts[zone]++;
+
+        });
+
+        // TOTAL SSC ZONES
 
         document.getElementById("sscCount").innerText =
-        sscZones.size;
+        Object.keys(zoneCounts).length;
 
-        // DROPDOWN HUB LIST
+        // SSC BADGES
+
+        const badgeContainer =
+        document.getElementById("sscBadges");
+
+        badgeContainer.innerHTML = "";
+
+        Object.entries(zoneCounts).forEach(([zone,count]) => {
+
+            badgeContainer.innerHTML += `
+
+            <div style="
+                padding:8px 14px;
+                border-radius:999px;
+                background:rgba(34,197,94,.15);
+                border:1px solid rgba(34,197,94,.35);
+                color:#22c55e;
+                font-size:13px;
+                font-weight:700;
+                display:flex;
+                align-items:center;
+                gap:6px;
+            ">
+
+                ${zone}
+
+                <span style="
+                    background:#22c55e;
+                    color:#04130a;
+                    padding:2px 8px;
+                    border-radius:999px;
+                    font-size:12px;
+                    font-weight:800;
+                ">
+                    ${count}
+                </span>
+
+            </div>
+
+            `;
+        });
+
+        // HUB DROPDOWN
 
         const datalist =
         document.getElementById("hubSuggestions");
@@ -546,7 +614,7 @@ async function searchHub(){
     resultDiv.innerHTML = html;
 }
 
-// ENTER SEARCH
+// ENTER KEY SEARCH
 
 document
 .getElementById("searchInput")
