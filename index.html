@@ -49,7 +49,7 @@ body{
 }
 
 .container{
-    max-width:1400px;
+    max-width:1450px;
     margin:auto;
     padding:30px 20px;
 }
@@ -71,7 +71,7 @@ body{
 }
 
 .sub-title{
-    font-size:30px;
+    font-size:28px;
     color:#e2e8f0;
     margin-bottom:10px;
     font-weight:600;
@@ -117,6 +117,46 @@ body{
     font-size:16px;
 }
 
+/* BADGES */
+
+.badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:15px;
+}
+
+.badge{
+    padding:8px 14px;
+    border-radius:999px;
+    background:rgba(34,197,94,.15);
+    border:1px solid rgba(34,197,94,.35);
+    color:#22c55e;
+    font-size:13px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.badge span{
+    background:#22c55e;
+    color:#04130a;
+    padding:2px 8px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:800;
+}
+
+/* MAIN GRID */
+
+.main-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:25px;
+    align-items:start;
+}
+
 /* SEARCH */
 
 .search-wrapper{
@@ -124,7 +164,7 @@ body{
     border:1px solid rgba(34,197,94,.18);
     border-radius:28px;
     padding:25px;
-    margin-bottom:35px;
+    margin-bottom:25px;
     backdrop-filter:blur(14px);
     box-shadow:0 15px 40px rgba(0,0,0,.35);
 }
@@ -169,7 +209,7 @@ body{
     transform:translateY(-2px) scale(1.03);
 }
 
-/* RESULT */
+/* RESULTS */
 
 .results{
     display:grid;
@@ -206,6 +246,44 @@ body{
     word-break:break-word;
 }
 
+/* BULK CARD */
+
+.bulk-title{
+    color:#22c55e;
+    margin-bottom:18px;
+    font-size:24px;
+}
+
+.bulk-desc{
+    color:#cbd5e1;
+    margin-bottom:18px;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.bulk-file{
+    width:100%;
+    padding:16px;
+    border-radius:18px;
+    background:#111827;
+    border:1px solid #1f2937;
+    color:white;
+    margin-bottom:18px;
+}
+
+.bulk-btn{
+    width:100%;
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    border:none;
+    color:white;
+    padding:18px;
+    border-radius:18px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 0 18px rgba(34,197,94,.35);
+}
+
 /* LOADING */
 
 .loading{
@@ -238,6 +316,13 @@ body{
 }
 
 /* MOBILE */
+
+@media(max-width:1000px){
+
+    .main-grid{
+        grid-template-columns:1fr;
+    }
+}
 
 @media(max-width:768px){
 
@@ -296,18 +381,11 @@ body{
 
             <h2 id="sscCount">0</h2>
 
-            <span style="display:block;margin-bottom:16px;">
+            <span>
                 SSC Zone Count
             </span>
 
-            <div id="sscBadges"
-            style="
-            display:flex;
-            flex-wrap:wrap;
-            gap:10px;
-            margin-top:10px;
-            ">
-            </div>
+            <div id="sscBadges" class="badges"></div>
 
         </div>
 
@@ -325,32 +403,77 @@ body{
 
     </div>
 
-    <!-- SEARCH -->
+    <!-- MAIN GRID -->
 
-    <div class="search-wrapper">
+    <div class="main-grid">
 
-        <div class="search-box">
+        <!-- LEFT -->
 
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search Hub Name..."
-                list="hubSuggestions"
-            >
+        <div>
 
-            <datalist id="hubSuggestions"></datalist>
+            <!-- SEARCH -->
 
-            <button onclick="searchHub()">
-                Search
-            </button>
+            <div class="search-wrapper">
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search Hub Name..."
+                        list="hubSuggestions"
+                    >
+
+                    <datalist id="hubSuggestions"></datalist>
+
+                    <button onclick="searchHub()">
+                        Search
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- RESULTS -->
+
+            <div id="results" class="results"></div>
+
+        </div>
+
+        <!-- RIGHT BULK CARD -->
+
+        <div>
+
+            <div class="search-wrapper">
+
+                <h2 class="bulk-title">
+                    Bulk Next Location Finder
+                </h2>
+
+                <p class="bulk-desc">
+                    Upload CSV file with Hub column
+                    and download Next Location result CSV.
+                </p>
+
+                <input
+                    type="file"
+                    id="csvFile"
+                    accept=".csv"
+                    class="bulk-file"
+                >
+
+                <button
+                    onclick="processBulkCSV()"
+                    class="bulk-btn"
+                >
+                    Generate Result CSV
+                </button>
+
+            </div>
 
         </div>
 
     </div>
-
-    <!-- RESULTS -->
-
-    <div id="results" class="results"></div>
 
     <!-- FOOTER -->
 
@@ -425,12 +548,10 @@ async function loadData(){
 
         });
 
-        // TOTAL SSC ZONES
-
         document.getElementById("sscCount").innerText =
         Object.keys(zoneCounts).length;
 
-        // SSC BADGES
+        // BADGES
 
         const badgeContainer =
         document.getElementById("sscBadges");
@@ -441,31 +562,11 @@ async function loadData(){
 
             badgeContainer.innerHTML += `
 
-            <div style="
-                padding:8px 14px;
-                border-radius:999px;
-                background:rgba(34,197,94,.15);
-                border:1px solid rgba(34,197,94,.35);
-                color:#22c55e;
-                font-size:13px;
-                font-weight:700;
-                display:flex;
-                align-items:center;
-                gap:6px;
-            ">
+            <div class="badge">
 
                 ${zone}
 
-                <span style="
-                    background:#22c55e;
-                    color:#04130a;
-                    padding:2px 8px;
-                    border-radius:999px;
-                    font-size:12px;
-                    font-weight:800;
-                ">
-                    ${count}
-                </span>
+                <span>${count}</span>
 
             </div>
 
@@ -614,7 +715,119 @@ async function searchHub(){
     resultDiv.innerHTML = html;
 }
 
-// ENTER KEY SEARCH
+// BULK CSV PROCESS
+
+function processBulkCSV(){
+
+    const fileInput =
+    document.getElementById("csvFile");
+
+    const file =
+    fileInput.files[0];
+
+    if(!file){
+
+        alert("Please Upload CSV File");
+
+        return;
+    }
+
+    const reader =
+    new FileReader();
+
+    reader.onload = function(e){
+
+        const csv =
+        e.target.result;
+
+        const rows =
+        csv
+        .trim()
+        .split("\n")
+        .map(r => r.replace(/\r/g,"").split(","));
+
+        const headers =
+        rows[0];
+
+        const hubIndex =
+        headers.findIndex(h =>
+            h.toLowerCase().includes("hub")
+        );
+
+        if(hubIndex === -1){
+
+            alert("Hub Column Not Found");
+
+            return;
+        }
+
+        let resultCSV =
+        "Hub,Next Location\n";
+
+        rows.slice(1).forEach(row => {
+
+            const hub =
+            row[hubIndex]?.trim();
+
+            const match =
+            sheetData.find(item =>
+
+                (item["Hub"] || "")
+                .toLowerCase()
+                === hub.toLowerCase()
+            );
+
+            const nextLocationKey =
+            match
+            ?
+            Object.keys(match).find(k =>
+                k.toLowerCase().includes("next")
+            )
+            :
+            null;
+
+            const nextLocation =
+            match && nextLocationKey
+            ?
+            match[nextLocationKey]
+            :
+            "Not Found";
+
+            resultCSV +=
+            `"${hub}","${nextLocation}"\n`;
+
+        });
+
+        const blob =
+        new Blob([resultCSV],{
+            type:"text/csv"
+        });
+
+        const url =
+        URL.createObjectURL(blob);
+
+        const a =
+        document.createElement("a");
+
+        a.href = url;
+
+        a.download =
+        "bulk_next_location_result.csv";
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        document.body.removeChild(a);
+
+        URL.revokeObjectURL(url);
+
+    };
+
+    reader.readAsText(file);
+}
+
+// ENTER SEARCH
 
 document
 .getElementById("searchInput")
