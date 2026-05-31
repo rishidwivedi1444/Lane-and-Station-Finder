@@ -7,7 +7,7 @@
 
 <title>Shadowfax Think Ahead - Lane Finder</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
@@ -53,7 +53,7 @@ body{
 /* CONTAINER */
 
 .container{
-    max-width:1200px;
+    max-width:1400px;
     margin:auto;
     padding:30px 20px;
 }
@@ -67,19 +67,18 @@ body{
 
 .brand{
     color:#22c55e;
-    font-size:22px;
-    font-weight:700;
-    letter-spacing:2px;
-    text-shadow:0 0 18px rgba(34,197,94,.5);
-    margin-bottom:10px;
+    font-size:40px;
+    font-weight:800;
+    letter-spacing:4px;
+    text-shadow:0 0 25px rgba(34,197,94,.6);
+    margin-bottom:16px;
 }
 
-.header h1{
-    font-size:56px;
-    font-weight:700;
-    color:#22c55e;
-    text-shadow:0 0 28px rgba(34,197,94,.55);
-    margin-bottom:12px;
+.sub-title{
+    font-size:28px;
+    color:#e2e8f0;
+    margin-bottom:10px;
+    font-weight:600;
 }
 
 .header p{
@@ -91,16 +90,16 @@ body{
 
 .top-cards{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
-    margin-bottom:30px;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:22px;
+    margin-bottom:35px;
 }
 
 .top-card{
-    background:rgba(15,23,42,.72);
+    background:rgba(15,23,42,.78);
     border:1px solid rgba(34,197,94,.18);
     border-radius:24px;
-    padding:25px;
+    padding:28px;
     backdrop-filter:blur(14px);
     box-shadow:0 12px 35px rgba(0,0,0,.35);
     transition:.3s;
@@ -108,29 +107,29 @@ body{
 
 .top-card:hover{
     transform:translateY(-4px);
-    border:1px solid rgba(34,197,94,.4);
+    border:1px solid rgba(34,197,94,.45);
 }
 
 .top-card h2{
     color:#22c55e;
-    font-size:34px;
+    font-size:42px;
     margin-bottom:8px;
 }
 
 .top-card span{
     color:#cbd5e1;
-    font-size:15px;
+    font-size:16px;
 }
 
 /* SEARCH */
 
 .search-wrapper{
-    background:rgba(15,23,42,.72);
+    background:rgba(15,23,42,.75);
     border:1px solid rgba(34,197,94,.18);
     border-radius:28px;
     padding:25px;
     margin-bottom:35px;
-    backdrop-filter:blur(12px);
+    backdrop-filter:blur(14px);
     box-shadow:0 15px 40px rgba(0,0,0,.35);
 }
 
@@ -141,7 +140,7 @@ body{
 
 .search-box input{
     flex:1;
-    padding:18px 20px;
+    padding:20px;
     border:none;
     border-radius:18px;
     background:#111827;
@@ -161,10 +160,10 @@ body{
     background:linear-gradient(135deg,#22c55e,#16a34a);
     border:none;
     color:white;
-    padding:18px 35px;
+    padding:20px 35px;
     border-radius:18px;
     font-size:17px;
-    font-weight:600;
+    font-weight:700;
     cursor:pointer;
     transition:.3s;
     box-shadow:0 0 18px rgba(34,197,94,.35);
@@ -178,64 +177,51 @@ body{
 
 .results{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-    gap:25px;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:22px;
 }
 
-.card{
-    background:rgba(15,23,42,.78);
+/* SMALL INFO CARD */
+
+.info-card{
+    background:rgba(15,23,42,.82);
     border:1px solid rgba(34,197,94,.18);
-    border-radius:26px;
-    padding:28px;
+    border-radius:24px;
+    padding:24px;
     backdrop-filter:blur(14px);
-    box-shadow:0 15px 40px rgba(0,0,0,.35);
+    box-shadow:0 12px 35px rgba(0,0,0,.35);
     transition:.3s;
-    position:relative;
-    overflow:hidden;
 }
 
-.card::before{
-    content:"";
-    position:absolute;
-    width:180px;
-    height:180px;
-    background:#22c55e;
-    filter:blur(90px);
-    opacity:.10;
-    top:-70px;
-    right:-70px;
-}
-
-.card:hover{
-    transform:translateY(-5px);
+.info-card:hover{
+    transform:translateY(-4px);
     border:1px solid rgba(34,197,94,.45);
 }
 
-.card h3{
+.info-title{
     color:#22c55e;
-    font-size:28px;
-    margin-bottom:22px;
-}
-
-.row{
-    display:flex;
-    justify-content:space-between;
-    gap:12px;
-    margin-bottom:16px;
-    border-bottom:1px solid rgba(255,255,255,.06);
-    padding-bottom:10px;
-}
-
-.label{
-    color:#22c55e;
+    font-size:16px;
+    margin-bottom:14px;
     font-weight:600;
 }
 
-.value{
+.info-value{
     color:#e2e8f0;
-    text-align:right;
+    font-size:22px;
+    font-weight:700;
     word-break:break-word;
 }
+
+/* LOADING */
+
+.loading{
+    text-align:center;
+    color:#22c55e;
+    font-size:20px;
+    margin-top:20px;
+}
+
+/* NO DATA */
 
 .no-data{
     background:rgba(15,23,42,.75);
@@ -248,18 +234,11 @@ body{
     font-weight:600;
 }
 
-.loading{
-    text-align:center;
-    color:#22c55e;
-    font-size:18px;
-    margin-top:20px;
-}
-
 /* FOOTER */
 
 .footer{
     text-align:center;
-    margin-top:40px;
+    margin-top:45px;
     color:#64748b;
     font-size:14px;
 }
@@ -268,8 +247,12 @@ body{
 
 @media(max-width:768px){
 
-    .header h1{
-        font-size:38px;
+    .brand{
+        font-size:28px;
+    }
+
+    .sub-title{
+        font-size:22px;
     }
 
     .search-box{
@@ -278,14 +261,6 @@ body{
 
     .search-box button{
         width:100%;
-    }
-
-    .row{
-        flex-direction:column;
-    }
-
-    .value{
-        text-align:left;
     }
 }
 
@@ -307,7 +282,9 @@ body{
             SHADOWFAX • THINK AHEAD
         </div>
 
-        <h1>Lane Finder Dashboard</h1>
+        <h2 class="sub-title">
+            Lane Finder Dashboard
+        </h2>
 
         <p>
             Smart Warehouse Route & Station Search System
@@ -320,6 +297,11 @@ body{
     <div class="top-cards">
 
         <div class="top-card">
+            <h2 id="sscCount">0</h2>
+            <span>SSC Zone Count</span>
+        </div>
+
+        <div class="top-card">
             <h2 id="totalRecords">0</h2>
             <span>Total Hubs</span>
         </div>
@@ -327,11 +309,6 @@ body{
         <div class="top-card">
             <h2>LIVE</h2>
             <span>Google Sheet Connected</span>
-        </div>
-
-        <div class="top-card">
-            <h2>24×7</h2>
-            <span>Realtime Search Access</span>
         </div>
 
     </div>
@@ -346,7 +323,10 @@ body{
                 type="text"
                 id="searchInput"
                 placeholder="Search Hub Name..."
+                list="hubSuggestions"
             >
+
+            <datalist id="hubSuggestions"></datalist>
 
             <button onclick="searchHub()">
                 Search
@@ -411,8 +391,36 @@ async function loadData(){
 
         });
 
+        // TOTAL HUB COUNT
+
         document.getElementById("totalRecords").innerText =
         sheetData.length;
+
+        // SSC ZONE COUNT
+
+        const sscZones =
+        new Set(sheetData.map(item => item["SSC Zone"]));
+
+        document.getElementById("sscCount").innerText =
+        sscZones.size;
+
+        // DROPDOWN HUB LIST
+
+        const datalist =
+        document.getElementById("hubSuggestions");
+
+        datalist.innerHTML = "";
+
+        sheetData.forEach(item => {
+
+            const option =
+            document.createElement("option");
+
+            option.value = item["Hub"];
+
+            datalist.appendChild(option);
+
+        });
 
         document.getElementById("results").innerHTML = "";
 
@@ -421,7 +429,7 @@ async function loadData(){
         console.log(error);
 
         document.getElementById("results").innerHTML =
-        `<div class="no-data">Failed To Load Data</div>`;
+        `<div class="no-data">Failed To Load Google Sheet Data</div>`;
     }
 }
 
@@ -477,58 +485,59 @@ async function searchHub(){
 
         html += `
 
-        <div class="card">
-
-            <h3>${item["Hub"] || "-"}</h3>
-
-            <div class="row">
-                <div class="label">Next Location</div>
-                <div class="value">
-                    ${
-                        nextLocationKey
-                        ?
-                        item[nextLocationKey]
-                        :
-                        "-"
-                    }
-                </div>
+        <div class="info-card">
+            <div class="info-title">Hub</div>
+            <div class="info-value">
+                ${item["Hub"] || "-"}
             </div>
+        </div>
 
-            <div class="row">
-                <div class="label">PTL Bin</div>
-                <div class="value">
-                    ${item["PTL Bin"] || "-"}
-                </div>
+        <div class="info-card">
+            <div class="info-title">Next Location</div>
+            <div class="info-value">
+                ${
+                    nextLocationKey
+                    ?
+                    item[nextLocationKey]
+                    :
+                    "-"
+                }
             </div>
+        </div>
 
-            <div class="row">
-                <div class="label">PTL Number</div>
-                <div class="value">
-                    ${item["PTL Number"] || "-"}
-                </div>
+        <div class="info-card">
+            <div class="info-title">PTL Bin</div>
+            <div class="info-value">
+                ${item["PTL Bin"] || "-"}
             </div>
+        </div>
 
-            <div class="row">
-                <div class="label">SSC Zone</div>
-                <div class="value">
-                    ${item["SSC Zone"] || "-"}
-                </div>
+        <div class="info-card">
+            <div class="info-title">PTL Number</div>
+            <div class="info-value">
+                ${item["PTL Number"] || "-"}
             </div>
+        </div>
 
-            <div class="row">
-                <div class="label">Global Zone</div>
-                <div class="value">
-                    ${item["Global Zone"] || "-"}
-                </div>
+        <div class="info-card">
+            <div class="info-title">SSC Zone</div>
+            <div class="info-value">
+                ${item["SSC Zone"] || "-"}
             </div>
+        </div>
 
-            <div class="row">
-                <div class="label">Map DC</div>
-                <div class="value">
-                    ${item["Map DC"] || "-"}
-                </div>
+        <div class="info-card">
+            <div class="info-title">Global Zone</div>
+            <div class="info-value">
+                ${item["Global Zone"] || "-"}
             </div>
+        </div>
 
+        <div class="info-card">
+            <div class="info-title">Map DC</div>
+            <div class="info-value">
+                ${item["Map DC"] || "-"}
+            </div>
         </div>
 
         `;
@@ -537,7 +546,7 @@ async function searchHub(){
     resultDiv.innerHTML = html;
 }
 
-// ENTER KEY SEARCH
+// ENTER SEARCH
 
 document
 .getElementById("searchInput")
