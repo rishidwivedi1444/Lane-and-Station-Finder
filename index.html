@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lane Finder Dashboard</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.header h1{
+    color:#222;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.search-box input{
+    flex:1;
+    padding:14px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:16px;
+}
+
+.search-box button{
+    padding:14px 20px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.card{
+    background:white;
+    padding:18px;
+    border-radius:14px;
+    margin-bottom:15px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.card h3{
+    color:#2563eb;
+    margin-bottom:10px;
+}
+
+.row{
+    margin:6px 0;
+}
+
+.no-data{
+    text-align:center;
+    color:red;
+    font-weight:bold;
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+<h1>Lane Finder Dashboard</h1>
+<p>Search Hub Name</p>
+</div>
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Enter Hub Name">
+<button onclick="searchHub()">Search</button>
+</div>
+
+<div id="results"></div>
+
+</div>
+
+<script>
+
+// Replace with your Google Sheet CSV URL
+const SHEET_CSV_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vTDokv4RdYjDrCMxbSrzWp-8nY157pPaZBemklThhklJ7APuYtOsuyYTpSwZIfiviTspZubCSheE8h8/pub?output=csv";
+
+let sheetData = [];
+
+async function loadData() {
+
+    const response = await fetch(SHEET_CSV_URL);
+    const csv = await response.text();
+
+    const rows = csv.split("\n").map(r => r.split(","));
+
+    const headers = rows[0].map(h => h.trim());
+
+    sheetData = rows.slice(1).map(row => {
+        let obj = {};
+        headers.forEach((header,index)=>{
+            obj[header] = row[index] || "";
+        });
+        return obj;
+    });
+}
+
+async function searchHub(){
+
+    if(sheetData.length === 0){
+        await loadData();
+    }
+
+    const hub = document
+        .getElementById("searchInput")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const resultDiv = document.getElementById("results");
+
+    const matches = sheetData.filter(item =>
+        (item["Hub"] || "")
+        .toLowerCase()
+        .includes(hub)
+    );
+
+    if(matches.length === 0){
+        resultDiv.innerHTML =
+        <div class="no-data">No Data Found</div>;
+        return;
+    }
+
+    let html = "";
+
+    matches.forEach(item => {
+
+        html += `
+        <div class="card">
+
+            <h3>${item["Hub"]}</h3>
+
+            <div class="row">
+            <b>Next Location:</b>
+            ${item["Next location"]}
+            </div>
+
+            <div class="row">
+            <b>PTL Bin:</b>
+            ${item["PTL Bin"]}
+            </div>
+
+            <div class="row">
+            <b>PTL Number:</b>
+            ${item["PTL Number"]}
+            </div>
+
+            <div class="row">
+            <b>SSC Zone:</b>
+            ${item["SSC Zone"]}
+            </div>
+
+            <div class="row">
+            <b>Global Zone:</b>
+            ${item["Global Zone"]}
+            </div>
+
+        </div>`;
+    });
+
+    resultDiv.innerHTML = html;
+}
+
+document
+.getElementById("searchInput")
+.addEventListener("keyup", searchHub);
+
+</script>
+
+</body>
+</html>
