@@ -98,12 +98,6 @@ body{
     padding:28px;
     backdrop-filter:blur(14px);
     box-shadow:0 12px 35px rgba(0,0,0,.35);
-    transition:.3s;
-}
-
-.top-card:hover{
-    transform:translateY(-4px);
-    border:1px solid rgba(34,197,94,.45);
 }
 
 .top-card h2{
@@ -111,13 +105,6 @@ body{
     font-size:42px;
     margin-bottom:8px;
 }
-
-.top-card span{
-    color:#cbd5e1;
-    font-size:16px;
-}
-
-/* BADGES */
 
 .badges{
     display:flex;
@@ -184,32 +171,20 @@ body{
     font-size:17px;
     outline:none;
     border:1px solid #1f2937;
-    transition:.3s;
 }
 
-.search-box input:focus{
-    border:1px solid #22c55e;
-    box-shadow:0 0 20px rgba(34,197,94,.4);
-}
-
-.search-box button{
+.search-box button,
+.bulk-btn{
     background:linear-gradient(135deg,#22c55e,#16a34a);
     border:none;
     color:white;
-    padding:20px 35px;
+    padding:18px 28px;
     border-radius:18px;
-    font-size:17px;
+    font-size:16px;
     font-weight:700;
     cursor:pointer;
-    transition:.3s;
-    box-shadow:0 0 18px rgba(34,197,94,.35);
+    width:100%;
 }
-
-.search-box button:hover{
-    transform:translateY(-2px) scale(1.03);
-}
-
-/* RESULTS */
 
 .results{
     display:grid;
@@ -224,12 +199,6 @@ body{
     padding:24px;
     backdrop-filter:blur(14px);
     box-shadow:0 12px 35px rgba(0,0,0,.35);
-    transition:.3s;
-}
-
-.info-card:hover{
-    transform:translateY(-4px);
-    border:1px solid rgba(34,197,94,.45);
 }
 
 .info-title{
@@ -246,8 +215,6 @@ body{
     word-break:break-word;
 }
 
-/* BULK CARD */
-
 .bulk-title{
     color:#22c55e;
     margin-bottom:18px;
@@ -258,7 +225,6 @@ body{
     color:#cbd5e1;
     margin-bottom:18px;
     font-size:14px;
-    line-height:1.6;
 }
 
 .bulk-file{
@@ -271,29 +237,12 @@ body{
     margin-bottom:18px;
 }
 
-.bulk-btn{
-    width:100%;
-    background:linear-gradient(135deg,#22c55e,#16a34a);
-    border:none;
-    color:white;
-    padding:18px;
-    border-radius:18px;
-    font-size:16px;
-    font-weight:700;
-    cursor:pointer;
-    box-shadow:0 0 18px rgba(34,197,94,.35);
-}
-
-/* LOADING */
-
 .loading{
     text-align:center;
     color:#22c55e;
     font-size:20px;
     margin-top:20px;
 }
-
-/* NO DATA */
 
 .no-data{
     background:rgba(15,23,42,.75);
@@ -306,16 +255,12 @@ body{
     font-weight:600;
 }
 
-/* FOOTER */
-
 .footer{
     text-align:center;
     margin-top:45px;
     color:#64748b;
     font-size:14px;
 }
-
-/* MOBILE */
 
 @media(max-width:1000px){
 
@@ -336,10 +281,6 @@ body{
 
     .search-box{
         flex-direction:column;
-    }
-
-    .search-box button{
-        width:100%;
     }
 }
 
@@ -375,29 +316,25 @@ body{
 
     <div class="top-cards">
 
-        <!-- SSC ZONE -->
-
         <div class="top-card">
 
             <h2 id="sscCount">0</h2>
 
-            <span>
+            <div style="color:#cbd5e1;">
                 SSC Zone Count
-            </span>
+            </div>
 
             <div id="sscBadges" class="badges"></div>
 
         </div>
 
-        <!-- TOTAL HUB -->
-
         <div class="top-card">
 
             <h2 id="totalRecords">0</h2>
 
-            <span>
+            <div style="color:#cbd5e1;">
                 Total Hubs
-            </span>
+            </div>
 
         </div>
 
@@ -440,9 +377,11 @@ body{
 
         </div>
 
-        <!-- RIGHT BULK CARD -->
+        <!-- RIGHT -->
 
         <div>
+
+            <!-- BULK CSV -->
 
             <div class="search-wrapper">
 
@@ -451,8 +390,8 @@ body{
                 </h2>
 
                 <p class="bulk-desc">
-                    Upload CSV file with Hub column
-                    and download Next Location result CSV.
+                    Upload CSV file with Hub column and
+                    download Next Location result CSV.
                 </p>
 
                 <input
@@ -471,11 +410,38 @@ body{
 
             </div>
 
+            <!-- SUGGESTION -->
+
+            <div class="search-wrapper">
+
+                <h2 class="bulk-title">
+                    Hub Suggestion Request
+                </h2>
+
+                <p class="bulk-desc">
+                    If Hub details are not available,
+                    submit Hub name here.
+                </p>
+
+                <input
+                    type="text"
+                    id="suggestHub"
+                    placeholder="Enter Missing Hub Name..."
+                    class="bulk-file"
+                >
+
+                <button
+                    onclick="submitSuggestion()"
+                    class="bulk-btn"
+                >
+                    Submit Suggestion
+                </button>
+
+            </div>
+
         </div>
 
     </div>
-
-    <!-- FOOTER -->
 
     <div class="footer">
         Powered By Shadowfax Think Ahead
@@ -489,6 +455,11 @@ body{
 
 const SHEET_CSV_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTDokv4RdYjDrCMxbSrzWp-8nY157pPaZBemklThhklJ7APuYtOsuyYTpSwZIfiviTspZubCSheE8h8/pub?output=csv";
+
+// APPS SCRIPT URL
+
+const APPS_SCRIPT_URL =
+"YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL";
 
 let sheetData = [];
 
@@ -531,7 +502,7 @@ async function loadData(){
         document.getElementById("totalRecords").innerText =
         sheetData.length;
 
-        // SSC ZONE COUNTS
+        // SSC ZONE COUNT
 
         const zoneCounts = {};
 
@@ -573,7 +544,7 @@ async function loadData(){
             `;
         });
 
-        // HUB DROPDOWN
+        // DROPDOWN
 
         const datalist =
         document.getElementById("hubSuggestions");
@@ -598,11 +569,11 @@ async function loadData(){
         console.log(error);
 
         document.getElementById("results").innerHTML =
-        `<div class="no-data">Failed To Load Google Sheet Data</div>`;
+        `<div class="no-data">Failed To Load Data</div>`;
     }
 }
 
-// SEARCH FUNCTION
+// SEARCH HUB
 
 async function searchHub(){
 
@@ -702,20 +673,13 @@ async function searchHub(){
             </div>
         </div>
 
-        <div class="info-card">
-            <div class="info-title">Map DC</div>
-            <div class="info-value">
-                ${item["Map DC"] || "-"}
-            </div>
-        </div>
-
         `;
     });
 
     resultDiv.innerHTML = html;
 }
 
-// BULK CSV PROCESS
+// BULK CSV
 
 function processBulkCSV(){
 
@@ -825,6 +789,45 @@ function processBulkCSV(){
     };
 
     reader.readAsText(file);
+}
+
+// SUGGESTION
+
+async function submitSuggestion(){
+
+    const hub =
+    document.getElementById("suggestHub")
+    .value
+    .trim();
+
+    if(hub === ""){
+
+        alert("Please Enter Hub Name");
+
+        return;
+    }
+
+    try{
+
+        await fetch(
+        APPS_SCRIPT_URL,
+        {
+            method:"POST",
+            body:JSON.stringify({
+                hub:hub
+            })
+        });
+
+        alert("Suggestion Submitted");
+
+        document.getElementById("suggestHub").value = "";
+
+    }catch(error){
+
+        console.log(error);
+
+        alert("Failed To Submit");
+    }
 }
 
 // ENTER SEARCH
