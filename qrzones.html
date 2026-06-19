@@ -127,7 +127,7 @@ body{
 
 .scan-label{
     color:#94a3b8;
-    font-size:12px;
+    font-size:13px;
     margin-top:10px;
 }
 
@@ -146,10 +146,7 @@ body{
 }
 
 @media print{
-    body{
-        background:white !important;
-        color:black !important;
-    }
+    body{ background:white !important; color:black !important; }
     .glow, .print-btn, .header .subtitle, .footer{ display:none; }
     .brand{ color:#16a34a !important; text-shadow:none !important; }
     .page-title{ color:#111 !important; }
@@ -191,7 +188,6 @@ body{
 
 const ZONES = ["Zone C3", "Zone C4", "Zone C5", "Zone C6"];
 
-// Auto-detect base URL so QR codes work on any host (GitHub Pages or localhost)
 const BASE_URL = window.location.origin + window.location.pathname.replace("qrzones.html","");
 
 function generateQRCodes(){
@@ -199,9 +195,7 @@ function generateQRCodes(){
     grid.innerHTML = "";
 
     ZONES.forEach(zone => {
-        const encodedZone = encodeURIComponent(zone);
-        adlo:
-const url = BASE_URL + "zoneview.html?zone=" + encodedZone;
+        const url = BASE_URL + "zoneview.html?zone=" + encodeURIComponent(zone);
 
         const card = document.createElement("div");
         card.className = "qr-card";
@@ -219,10 +213,7 @@ const url = BASE_URL + "zoneview.html?zone=" + encodedZone;
             <div class="zone-url">${url}</div>
         `;
 
-        // Re-attach qrBox after innerHTML reset
-        const nameDiv = card.querySelector(".zone-name");
-        nameDiv.insertAdjacentElement("afterend", qrBox);
-
+        card.querySelector(".zone-name").insertAdjacentElement("afterend", qrBox);
         grid.appendChild(card);
 
         new QRCode(qrDiv, {
