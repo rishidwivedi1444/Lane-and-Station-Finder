@@ -192,7 +192,7 @@ body{
 const ZONES = ["Zone C3", "Zone C4", "Zone C5", "Zone C6"];
 
 // Auto-detect base URL so QR codes work on any host (GitHub Pages or localhost)
-const BASE_URL = window.location.origin + window.location.pathname.replace("qr-zones.html","");
+const BASE_URL = window.location.origin + window.location.pathname.replace("qrzones.html","");
 
 function generateQRCodes(){
     const grid = document.getElementById("qrGrid");
@@ -200,7 +200,8 @@ function generateQRCodes(){
 
     ZONES.forEach(zone => {
         const encodedZone = encodeURIComponent(zone);
-        const url = BASE_URL + "zone-view.html?zone=" + encodedZone;
+        adlo:
+const url = BASE_URL + "zoneview.html?zone=" + encodedZone;
 
         const card = document.createElement("div");
         card.className = "qr-card";
