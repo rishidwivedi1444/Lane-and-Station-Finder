@@ -200,23 +200,6 @@ tbody td{
     font-size:13px;
 }
 
-.back-btn{
-    display:inline-block;
-    margin-bottom:24px;
-    color:#22c55e;
-    text-decoration:none;
-    font-size:14px;
-    font-weight:600;
-    border:1px solid rgba(34,197,94,.3);
-    padding:8px 18px;
-    border-radius:999px;
-    transition:background .2s;
-}
-
-.back-btn:hover{
-    background:rgba(34,197,94,.1);
-}
-
 @media(max-width:600px){
     .brand{ font-size:22px; }
     .zone-badge{ font-size:22px; padding:10px 24px; }
@@ -263,6 +246,31 @@ tbody td{
 
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS75lvLukKhjtSQd0gtUGThN5Iq1Zj07hE6nUJQpHYgsFA8Mo4cu9IGnsl-1RIAxuQ7oSmsC2sYzO-c/pub?gid=0&single=true&output=csv";
 
+// Proper CSV parser — handles commas inside quoted cells
+function parseCSV(text){
+    const rows = [];
+    const lines = text.replace(/\r\n/g,"\n").replace(/\r/g,"\n").split("\n");
+    for(const line of lines){
+        if(!line.trim()) continue;
+        const cols = [];
+        let cur = "", inQ = false;
+        for(let i = 0; i < line.length; i++){
+            const c = line[i];
+            if(c === '"'){
+                if(inQ && line[i+1] === '"'){ cur += '"'; i++; }
+                else inQ = !inQ;
+            } else if(c === ',' && !inQ){
+                cols.push(cur.trim()); cur = "";
+            } else {
+                cur += c;
+            }
+        }
+        cols.push(cur.trim());
+        rows.push(cols);
+    }
+    return rows;
+}
+
 function getZoneParam(){
     const params = new URLSearchParams(window.location.search);
     return (params.get("zone") || "").trim();
@@ -284,23 +292,32 @@ async function loadZoneData(){
     try{
         const res = await fetch(SHEET_URL);
         const csv = await res.text();
+        const rows = parseCSV(csv);
 
-        const rows = csv.trim().split("\n").map(r => r.replace(/\r/g,"").split(","));
-        const headers = rows[0].map(h => h.trim());
+        if(rows.length < 2){
+            document.getElementById("tableContainer").innerHTML =
+                '<div class="error">Sheet data not found. Check published URL.</div>';
+            return;
+        }
 
-        const laneCol   = headers.findIndex(h => h.toLowerCase().includes("lane"));
-        const zoneCol   = headers.findIndex(h => h.toLowerCase().includes("zone"));
-        const ptlCol    = headers.findIndex(h => h.toLowerCase().includes("ptl") && h.toLowerCase().includes("number"));
-        const binCol    = headers.findIndex(h => h.toLowerCase().includes("bin"));
+        const headers = rows[0].map(h => h.toLowerCase());
+
+        const laneCol = headers.findIndex(h => h.includes("lane"));
+        const zoneCol = headers.findIndex(h => h.includes("zone"));
+        const ptlCol  = headers.findIndex(h => h.includes("ptl") && h.includes("number"));
+        const binCol  = headers.findIndex(h => h.includes("bin") || h.includes("ptl bin"));
 
         const data = rows.slice(1)
             .map(r => ({
-                lane: r[laneCol]  || "",
-                zone: r[zoneCol]  || "",
-                ptl:  r[ptlCol]   || "",
-                bin:  r[binCol]   || ""
+                lane: (r[laneCol] || "").trim(),
+                zone: (r[zoneCol] || "").trim(),
+                ptl:  (r[ptlCol]  || "").trim(),
+                bin:  (r[binCol]  || "").trim()
             }))
-            .filter(d => d.zone.trim().toLowerCase() === zone.toLowerCase() && d.lane.trim() !== "");
+            .filter(d =>
+                d.zone.toLowerCase() === zone.toLowerCase() &&
+                d.lane !== ""
+            );
 
         if(data.length === 0){
             document.getElementById("tableContainer").innerHTML =
@@ -314,9 +331,9 @@ async function loadZoneData(){
         document.getElementById("laneCount").textContent = data.length;
         document.getElementById("ptlCount").textContent  = uniquePTLs.size;
 
-        let rows_html = "";
+        let html = "";
         data.forEach((d, i) => {
-            rows_html += `
+            html += `
             <tr>
                 <td>${i+1}</td>
                 <td><span class="lane-text">${d.lane}</span></td>
@@ -335,7 +352,7 @@ async function loadZoneData(){
                     <th>Bin Number</th>
                 </tr>
             </thead>
-            <tbody>${rows_html}</tbody>
+            <tbody>${html}</tbody>
         </table>`;
 
     }catch(e){
