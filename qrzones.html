@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zone QR Codes - Shadowfax</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:
+    radial-gradient(circle at top left,#14532d,#020617 40%),
+    radial-gradient(circle at bottom right,#052e16,#000814 50%);
+    min-height:100vh;
+    color:white;
+}
+
+.glow{
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:#22c55e;
+    filter:blur(180px);
+    opacity:.12;
+    border-radius:50%;
+    z-index:-1;
+}
+
+.glow1{ top:-150px; left:-150px; }
+.glow2{ bottom:-150px; right:-150px; }
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:36px 20px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.brand{
+    color:#22c55e;
+    font-size:34px;
+    font-weight:800;
+    letter-spacing:3px;
+    text-shadow:0 0 25px rgba(34,197,94,.6);
+    margin-bottom:10px;
+}
+
+.page-title{
+    font-size:22px;
+    color:#e2e8f0;
+    font-weight:600;
+    margin-bottom:6px;
+}
+
+.subtitle{
+    color:#94a3b8;
+    font-size:14px;
+}
+
+.print-btn{
+    display:inline-block;
+    margin-top:18px;
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    color:white;
+    border:none;
+    padding:14px 36px;
+    border-radius:999px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    letter-spacing:1px;
+}
+
+.print-btn:hover{
+    opacity:.9;
+}
+
+.qr-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:28px;
+}
+
+.qr-card{
+    background:rgba(15,23,42,.85);
+    border:1px solid rgba(34,197,94,.2);
+    border-radius:28px;
+    padding:30px 24px;
+    text-align:center;
+    backdrop-filter:blur(14px);
+    box-shadow:0 12px 35px rgba(0,0,0,.35);
+}
+
+.zone-name{
+    color:#22c55e;
+    font-size:22px;
+    font-weight:800;
+    margin-bottom:20px;
+    letter-spacing:1px;
+}
+
+.qr-box{
+    display:flex;
+    justify-content:center;
+    margin-bottom:20px;
+}
+
+.qr-box canvas,
+.qr-box img{
+    border-radius:12px;
+    border:4px solid rgba(34,197,94,.3);
+    background:white;
+    padding:6px;
+}
+
+.scan-label{
+    color:#94a3b8;
+    font-size:12px;
+    margin-top:10px;
+}
+
+.zone-url{
+    font-size:10px;
+    color:#475569;
+    word-break:break-all;
+    margin-top:8px;
+}
+
+.footer{
+    text-align:center;
+    margin-top:50px;
+    color:#64748b;
+    font-size:13px;
+}
+
+@media print{
+    body{
+        background:white !important;
+        color:black !important;
+    }
+    .glow, .print-btn, .header .subtitle, .footer{ display:none; }
+    .brand{ color:#16a34a !important; text-shadow:none !important; }
+    .page-title{ color:#111 !important; }
+    .qr-card{
+        background:white !important;
+        border:2px solid #16a34a !important;
+        box-shadow:none !important;
+        break-inside:avoid;
+    }
+    .zone-name{ color:#16a34a !important; }
+    .scan-label{ color:#555 !important; }
+    .qr-grid{ grid-template-columns:repeat(2,1fr); gap:20px; }
+    .container{ padding:10px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="glow glow1"></div>
+<div class="glow glow2"></div>
+
+<div class="container">
+
+    <div class="header">
+        <div class="brand">SHADOWFAX • THINK AHEAD</div>
+        <div class="page-title">Zone QR Codes</div>
+        <div class="subtitle">Scan karo apne zone ka QR — lane aur PTL details dekhne ke liye</div>
+        <button class="print-btn" onclick="window.print()">🖨️ Print All QR Codes</button>
+    </div>
+
+    <div class="qr-grid" id="qrGrid"></div>
+
+    <div class="footer">Powered By Shadowfax Think Ahead</div>
+
+</div>
+
+<script>
+
+const ZONES = ["Zone C3", "Zone C4", "Zone C5", "Zone C6"];
+
+// Auto-detect base URL so QR codes work on any host (GitHub Pages or localhost)
+const BASE_URL = window.location.origin + window.location.pathname.replace("qr-zones.html","");
+
+function generateQRCodes(){
+    const grid = document.getElementById("qrGrid");
+    grid.innerHTML = "";
+
+    ZONES.forEach(zone => {
+        const encodedZone = encodeURIComponent(zone);
+        const url = BASE_URL + "zone-view.html?zone=" + encodedZone;
+
+        const card = document.createElement("div");
+        card.className = "qr-card";
+
+        const qrBox = document.createElement("div");
+        qrBox.className = "qr-box";
+        const qrDiv = document.createElement("div");
+        qrDiv.id = "qr-" + zone.replace(/\s+/g,"-");
+        qrBox.appendChild(qrDiv);
+
+        card.innerHTML = `<div class="zone-name">${zone}</div>`;
+        card.appendChild(qrBox);
+        card.innerHTML += `
+            <div class="scan-label">📷 Scan to view lanes</div>
+            <div class="zone-url">${url}</div>
+        `;
+
+        // Re-attach qrBox after innerHTML reset
+        const nameDiv = card.querySelector(".zone-name");
+        nameDiv.insertAdjacentElement("afterend", qrBox);
+
+        grid.appendChild(card);
+
+        new QRCode(qrDiv, {
+            text: url,
+            width: 180,
+            height: 180,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    });
+}
+
+generateQRCodes();
+
+</script>
+</body>
+</html>

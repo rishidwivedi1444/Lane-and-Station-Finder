@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zone Lane Finder - Shadowfax</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:
+    radial-gradient(circle at top left,#14532d,#020617 40%),
+    radial-gradient(circle at bottom right,#052e16,#000814 50%);
+    min-height:100vh;
+    color:white;
+    overflow-x:hidden;
+}
+
+.glow{
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:#22c55e;
+    filter:blur(180px);
+    opacity:.12;
+    border-radius:50%;
+    z-index:-1;
+}
+
+.glow1{ top:-150px; left:-150px; }
+.glow2{ bottom:-150px; right:-150px; }
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:30px 20px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.brand{
+    color:#22c55e;
+    font-size:32px;
+    font-weight:800;
+    letter-spacing:3px;
+    text-shadow:0 0 25px rgba(34,197,94,.6);
+    margin-bottom:10px;
+}
+
+.zone-badge{
+    display:inline-block;
+    background:rgba(34,197,94,.15);
+    border:2px solid rgba(34,197,94,.5);
+    color:#22c55e;
+    font-size:28px;
+    font-weight:800;
+    padding:12px 36px;
+    border-radius:999px;
+    margin-bottom:8px;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    color:#94a3b8;
+    font-size:15px;
+    margin-top:6px;
+}
+
+.stats-row{
+    display:flex;
+    gap:16px;
+    justify-content:center;
+    margin-bottom:30px;
+    flex-wrap:wrap;
+}
+
+.stat-card{
+    background:rgba(15,23,42,.78);
+    border:1px solid rgba(34,197,94,.2);
+    border-radius:18px;
+    padding:18px 32px;
+    text-align:center;
+    backdrop-filter:blur(14px);
+}
+
+.stat-number{
+    color:#22c55e;
+    font-size:36px;
+    font-weight:800;
+}
+
+.stat-label{
+    color:#94a3b8;
+    font-size:13px;
+    margin-top:4px;
+}
+
+.table-wrapper{
+    background:rgba(15,23,42,.78);
+    border:1px solid rgba(34,197,94,.18);
+    border-radius:24px;
+    padding:28px;
+    backdrop-filter:blur(14px);
+    box-shadow:0 12px 35px rgba(0,0,0,.35);
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead th{
+    background:rgba(34,197,94,.12);
+    color:#22c55e;
+    font-size:14px;
+    font-weight:700;
+    padding:14px 18px;
+    text-align:left;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+thead th:first-child{ border-radius:10px 0 0 10px; }
+thead th:last-child{ border-radius:0 10px 10px 0; }
+
+tbody tr{
+    border-bottom:1px solid rgba(255,255,255,.05);
+    transition:background .2s;
+}
+
+tbody tr:hover{
+    background:rgba(34,197,94,.06);
+}
+
+tbody td{
+    padding:14px 18px;
+    color:#e2e8f0;
+    font-size:15px;
+    font-weight:500;
+}
+
+.ptl-chip{
+    display:inline-block;
+    background:rgba(34,197,94,.15);
+    border:1px solid rgba(34,197,94,.3);
+    color:#22c55e;
+    padding:5px 14px;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:700;
+}
+
+.bin-chip{
+    display:inline-block;
+    background:rgba(59,130,246,.12);
+    border:1px solid rgba(59,130,246,.3);
+    color:#93c5fd;
+    padding:5px 14px;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:700;
+}
+
+.lane-text{
+    font-weight:700;
+    font-size:16px;
+    color:#f1f5f9;
+}
+
+.loading{
+    text-align:center;
+    color:#22c55e;
+    font-size:20px;
+    padding:40px;
+}
+
+.error{
+    text-align:center;
+    color:#ef4444;
+    font-size:18px;
+    padding:40px;
+    font-weight:600;
+}
+
+.footer{
+    text-align:center;
+    margin-top:40px;
+    color:#64748b;
+    font-size:13px;
+}
+
+.back-btn{
+    display:inline-block;
+    margin-bottom:24px;
+    color:#22c55e;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    border:1px solid rgba(34,197,94,.3);
+    padding:8px 18px;
+    border-radius:999px;
+    transition:background .2s;
+}
+
+.back-btn:hover{
+    background:rgba(34,197,94,.1);
+}
+
+@media(max-width:600px){
+    .brand{ font-size:22px; }
+    .zone-badge{ font-size:22px; padding:10px 24px; }
+    thead th, tbody td{ padding:10px 12px; font-size:13px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="glow glow1"></div>
+<div class="glow glow2"></div>
+
+<div class="container">
+
+    <div class="header">
+        <div class="brand">SHADOWFAX • THINK AHEAD</div>
+        <div id="zoneBadge" class="zone-badge">Loading...</div>
+        <div class="subtitle">Lane & PTL Assignment</div>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-number" id="laneCount">-</div>
+            <div class="stat-label">Total Lanes</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="ptlCount">-</div>
+            <div class="stat-label">PTL Numbers</div>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <div id="tableContainer">
+            <div class="loading">Loading Zone Data...</div>
+        </div>
+    </div>
+
+    <div class="footer">Powered By Shadowfax Think Ahead</div>
+
+</div>
+
+<script>
+
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS75lvLukKhjtSQd0gtUGThN5Iq1Zj07hE6nUJQpHYgsFA8Mo4cu9IGnsl-1RIAxuQ7oSmsC2sYzO-c/pub?gid=0&single=true&output=csv";
+
+function getZoneParam(){
+    const params = new URLSearchParams(window.location.search);
+    return (params.get("zone") || "").trim();
+}
+
+async function loadZoneData(){
+    const zone = getZoneParam();
+
+    if(!zone){
+        document.getElementById("zoneBadge").textContent = "No Zone Specified";
+        document.getElementById("tableContainer").innerHTML =
+            '<div class="error">Please scan a valid zone QR code.</div>';
+        return;
+    }
+
+    document.getElementById("zoneBadge").textContent = zone;
+    document.title = zone + " - Lane Finder";
+
+    try{
+        const res = await fetch(SHEET_URL);
+        const csv = await res.text();
+
+        const rows = csv.trim().split("\n").map(r => r.replace(/\r/g,"").split(","));
+        const headers = rows[0].map(h => h.trim());
+
+        const laneCol   = headers.findIndex(h => h.toLowerCase().includes("lane"));
+        const zoneCol   = headers.findIndex(h => h.toLowerCase().includes("zone"));
+        const ptlCol    = headers.findIndex(h => h.toLowerCase().includes("ptl") && h.toLowerCase().includes("number"));
+        const binCol    = headers.findIndex(h => h.toLowerCase().includes("bin"));
+
+        const data = rows.slice(1)
+            .map(r => ({
+                lane: r[laneCol]  || "",
+                zone: r[zoneCol]  || "",
+                ptl:  r[ptlCol]   || "",
+                bin:  r[binCol]   || ""
+            }))
+            .filter(d => d.zone.trim().toLowerCase() === zone.toLowerCase() && d.lane.trim() !== "");
+
+        if(data.length === 0){
+            document.getElementById("tableContainer").innerHTML =
+                `<div class="error">No data found for ${zone}.</div>`;
+            document.getElementById("laneCount").textContent = "0";
+            document.getElementById("ptlCount").textContent  = "0";
+            return;
+        }
+
+        const uniquePTLs = new Set(data.map(d => d.ptl).filter(Boolean));
+        document.getElementById("laneCount").textContent = data.length;
+        document.getElementById("ptlCount").textContent  = uniquePTLs.size;
+
+        let rows_html = "";
+        data.forEach((d, i) => {
+            rows_html += `
+            <tr>
+                <td>${i+1}</td>
+                <td><span class="lane-text">${d.lane}</span></td>
+                <td><span class="ptl-chip">${d.ptl || "-"}</span></td>
+                <td><span class="bin-chip">${d.bin || "-"}</span></td>
+            </tr>`;
+        });
+
+        document.getElementById("tableContainer").innerHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Lane</th>
+                    <th>PTL Number</th>
+                    <th>Bin Number</th>
+                </tr>
+            </thead>
+            <tbody>${rows_html}</tbody>
+        </table>`;
+
+    }catch(e){
+        document.getElementById("tableContainer").innerHTML =
+            '<div class="error">Failed to load data. Please try again.</div>';
+    }
+}
+
+loadZoneData();
+
+</script>
+</body>
+</html>
