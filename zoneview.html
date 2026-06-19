@@ -28,9 +28,8 @@ body{
 
 .container{ max-width:800px; margin:auto; padding:28px 16px; }
 
-/* HEADER */
-.header{ text-align:center; margin-bottom:24px; }
-.brand{ color:#22c55e; font-size:26px; font-weight:800; letter-spacing:3px; text-shadow:0 0 20px rgba(34,197,94,.6); margin-bottom:8px; }
+.header{ text-align:center; margin-bottom:22px; }
+.brand{ color:#22c55e; font-size:24px; font-weight:800; letter-spacing:3px; text-shadow:0 0 20px rgba(34,197,94,.6); margin-bottom:8px; }
 .zone-badge{
     display:inline-block;
     background:rgba(34,197,94,.15); border:2px solid rgba(34,197,94,.5);
@@ -38,8 +37,7 @@ body{
     padding:10px 32px; border-radius:999px; letter-spacing:2px;
 }
 
-/* STAT CARDS */
-.stats-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+.stats-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0; }
 .stat-card{
     background:rgba(15,23,42,.82); border:1px solid rgba(34,197,94,.2);
     border-radius:20px; padding:20px; text-align:center; backdrop-filter:blur(14px);
@@ -47,12 +45,11 @@ body{
 .stat-number{ color:#22c55e; font-size:40px; font-weight:800; }
 .stat-label{ color:#94a3b8; font-size:13px; margin-top:4px; }
 
-/* SEARCH SECTION */
 .section{
     background:rgba(15,23,42,.78); border:1px solid rgba(34,197,94,.18);
     border-radius:20px; padding:22px; margin-bottom:18px; backdrop-filter:blur(14px);
 }
-.section-title{ color:#22c55e; font-size:16px; font-weight:700; margin-bottom:14px; letter-spacing:.5px; }
+.section-title{ color:#22c55e; font-size:15px; font-weight:700; margin-bottom:14px; }
 
 .search-row{ display:flex; gap:10px; }
 .search-input{
@@ -60,6 +57,7 @@ body{
     background:#0f172a; border:1px solid #1e293b; color:white;
     font-size:15px; outline:none;
 }
+.search-input::placeholder{ color:#475569; }
 .search-input:focus{ border-color:rgba(34,197,94,.5); }
 .search-btn{
     background:linear-gradient(135deg,#22c55e,#16a34a);
@@ -67,65 +65,80 @@ body{
     border-radius:14px; font-size:15px; font-weight:700; cursor:pointer;
 }
 
-/* RESULT CARDS */
 .result-box{ margin-top:14px; }
 
-.lane-result{
+.hub-result{
     background:rgba(34,197,94,.08); border:1px solid rgba(34,197,94,.25);
     border-radius:14px; padding:16px 20px; margin-bottom:10px;
 }
-.lane-result-label{ color:#94a3b8; font-size:12px; margin-bottom:4px; }
-.lane-result-value{ color:#f1f5f9; font-size:18px; font-weight:700; }
-.ptl-tag{
-    display:inline-block; margin-top:8px;
+.res-label{ color:#94a3b8; font-size:11px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:3px; }
+.res-value{ color:#f1f5f9; font-size:16px; font-weight:700; margin-bottom:8px; }
+.res-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
+.ptl-chip{
+    display:inline-block;
     background:rgba(34,197,94,.15); border:1px solid rgba(34,197,94,.4);
-    color:#22c55e; padding:6px 16px; border-radius:999px;
-    font-size:14px; font-weight:700; cursor:pointer; transition:background .2s;
+    color:#22c55e; padding:5px 14px; border-radius:999px;
+    font-size:13px; font-weight:700;
 }
-.ptl-tag:hover{ background:rgba(34,197,94,.3); }
+.bin-chip{
+    display:inline-block;
+    background:rgba(59,130,246,.12); border:1px solid rgba(59,130,246,.3);
+    color:#93c5fd; padding:5px 14px; border-radius:999px;
+    font-size:13px; font-weight:700;
+}
+.lane-chip{
+    display:inline-block;
+    background:rgba(168,85,247,.1); border:1px solid rgba(168,85,247,.3);
+    color:#c084fc; padding:5px 14px; border-radius:999px;
+    font-size:13px; font-weight:600;
+}
 
-.no-result{ color:#ef4444; font-size:15px; padding:10px 0; font-weight:600; }
+.no-result{ color:#ef4444; font-size:15px; padding:8px 0; font-weight:600; }
 
-/* PTL SELECT */
 .ptl-grid{ display:flex; flex-wrap:wrap; gap:10px; }
 .ptl-btn{
     background:rgba(15,23,42,.9); border:1.5px solid rgba(34,197,94,.3);
-    color:#22c55e; padding:10px 20px; border-radius:999px;
+    color:#22c55e; padding:10px 22px; border-radius:999px;
     font-size:14px; font-weight:700; cursor:pointer; transition:all .2s;
 }
-.ptl-btn:hover, .ptl-btn.active{
+.ptl-btn:hover,.ptl-btn.active{
     background:rgba(34,197,94,.2); border-color:#22c55e;
 }
 
-/* BIN TABLE */
-.bin-section{ margin-top:16px; }
+.bin-section{ margin-top:18px; }
+.ptl-heading{
+    color:#22c55e; font-weight:700; font-size:15px;
+    margin-bottom:12px; padding-bottom:10px;
+    border-bottom:1px solid rgba(34,197,94,.15);
+}
 .bin-table-wrap{ overflow-x:auto; }
 table{ width:100%; border-collapse:collapse; }
 thead th{
     background:rgba(34,197,94,.12); color:#22c55e;
-    font-size:13px; font-weight:700; padding:12px 16px;
+    font-size:12px; font-weight:700; padding:12px 14px;
     text-align:left; letter-spacing:.5px; text-transform:uppercase;
 }
 thead th:first-child{ border-radius:10px 0 0 10px; }
 thead th:last-child{ border-radius:0 10px 10px 0; }
-tbody tr{ border-bottom:1px solid rgba(255,255,255,.05); }
+tbody tr{ border-bottom:1px solid rgba(255,255,255,.04); }
 tbody tr:hover{ background:rgba(34,197,94,.05); }
-tbody td{ padding:12px 16px; color:#e2e8f0; font-size:14px; font-weight:500; }
-
-.bin-chip{
+tbody td{ padding:11px 14px; color:#e2e8f0; font-size:14px; }
+.td-hub{ font-weight:600; color:#f1f5f9; }
+.td-bin{
     display:inline-block;
-    background:rgba(59,130,246,.12); border:1px solid rgba(59,130,246,.3);
-    color:#93c5fd; padding:4px 12px; border-radius:999px; font-size:13px; font-weight:700;
+    background:rgba(59,130,246,.12); border:1px solid rgba(59,130,246,.25);
+    color:#93c5fd; padding:3px 10px; border-radius:999px; font-size:12px; font-weight:700;
 }
-.hub-name{ font-weight:600; color:#f1f5f9; }
+.td-lane{ color:#94a3b8; font-size:13px; }
 
-.loading{ text-align:center; color:#22c55e; font-size:18px; padding:30px; }
-.footer{ text-align:center; margin-top:36px; color:#64748b; font-size:12px; }
+.loading{ text-align:center; color:#22c55e; font-size:16px; padding:24px; }
+.footer{ text-align:center; margin-top:32px; color:#64748b; font-size:12px; }
 
 @media(max-width:500px){
     .brand{ font-size:18px; }
     .zone-badge{ font-size:20px; padding:8px 20px; }
-    .stat-number{ font-size:30px; }
+    .stat-number{ font-size:32px; }
+    .search-row{ flex-direction:column; }
 }
 
 </style>
@@ -144,8 +157,8 @@ tbody td{ padding:12px 16px; color:#e2e8f0; font-size:14px; font-weight:500; }
 
     <div class="stats-row">
         <div class="stat-card">
-            <div class="stat-number" id="laneCount">-</div>
-            <div class="stat-label">Total Lanes</div>
+            <div class="stat-number" id="hubCount">-</div>
+            <div class="stat-label">Total Hubs</div>
         </div>
         <div class="stat-card">
             <div class="stat-number" id="ptlCount">-</div>
@@ -153,21 +166,21 @@ tbody td{ padding:12px 16px; color:#e2e8f0; font-size:14px; font-weight:500; }
         </div>
     </div>
 
-    <!-- LANE SEARCH -->
+    <!-- HUB SEARCH -->
     <div class="section">
-        <div class="section-title">🔍 Lane Search — Kis PTL pe hai?</div>
+        <div class="section-title">🔍 Hub Search — Kaun se PTL & Bin pe hai?</div>
         <div class="search-row">
-            <input type="text" id="laneInput" class="search-input"
-                placeholder="Lane ka naam daalo..." list="laneSuggestions">
-            <datalist id="laneSuggestions"></datalist>
-            <button class="search-btn" onclick="searchLane()">Search</button>
+            <input type="text" id="hubInput" class="search-input"
+                placeholder="Hub ya destination name daalo..." list="hubSuggestions">
+            <datalist id="hubSuggestions"></datalist>
+            <button class="search-btn" onclick="searchHub()">Search</button>
         </div>
-        <div class="result-box" id="laneResult"></div>
+        <div class="result-box" id="hubResult"></div>
     </div>
 
     <!-- PTL SELECT -->
     <div class="section">
-        <div class="section-title">📦 PTL Select — Us PTL ke saare Bins & Hubs</div>
+        <div class="section-title">📦 PTL Select — Us PTL ke saare Hubs & Bins</div>
         <div class="ptl-grid" id="ptlGrid">
             <div class="loading">Loading...</div>
         </div>
@@ -189,11 +202,11 @@ function parseCSV(text){
     const lines = text.replace(/\r\n/g,"\n").replace(/\r/g,"\n").split("\n");
     for(const line of lines){
         if(!line.trim()) continue;
-        const cols = []; let cur = "", inQ = false;
-        for(let i = 0; i < line.length; i++){
-            const c = line[i];
-            if(c==='"'){ if(inQ && line[i+1]==='"'){cur+='"';i++;} else inQ=!inQ; }
-            else if(c===',' && !inQ){ cols.push(cur.trim()); cur=""; }
+        const cols=[]; let cur="", inQ=false;
+        for(let i=0;i<line.length;i++){
+            const c=line[i];
+            if(c==='"'){ if(inQ&&line[i+1]==='"'){cur+='"';i++;}else inQ=!inQ; }
+            else if(c===','&&!inQ){ cols.push(cur.trim()); cur=""; }
             else cur+=c;
         }
         cols.push(cur.trim());
@@ -202,148 +215,129 @@ function parseCSV(text){
     return rows;
 }
 
-function getZoneParam(){
-    return (new URLSearchParams(window.location.search).get("zone") || "").trim();
+function getZone(){
+    return (new URLSearchParams(window.location.search).get("zone")||"").trim();
 }
 
 async function init(){
-    const zone = getZoneParam();
+    const zone = getZone();
     if(!zone){
-        document.getElementById("zoneBadge").textContent = "No Zone";
-        document.getElementById("ptlGrid").innerHTML = '<span style="color:#ef4444">Invalid QR code.</span>';
+        document.getElementById("zoneBadge").textContent="No Zone";
+        document.getElementById("ptlGrid").innerHTML='<span style="color:#ef4444">Invalid QR.</span>';
         return;
     }
-
     document.getElementById("zoneBadge").textContent = zone;
-    document.title = zone + " - Lane Finder";
+    document.title = zone+" - Lane Finder";
 
     try{
         const res  = await fetch(SHEET_URL);
         const csv  = await res.text();
         const rows = parseCSV(csv);
-        if(rows.length < 2){ showError("Sheet data not found."); return; }
+        if(rows.length<2){ showErr("Sheet data not found."); return; }
 
-        const headers = rows[0].map(h => h.toLowerCase());
-        const laneCol = headers.findIndex(h => h==="lane" || h.includes("lane"));
-        const zoneCol = headers.findIndex(h => h==="zone" || h.includes("zone"));
-        const ptlCol  = headers.findIndex(h => h.includes("ptl") && h.includes("number"));
-        const binCol  = headers.findIndex(h => h.includes("bin"));
-        const hubCol  = headers.findIndex(h => h.includes("destination") || h.includes("hub") || h.includes("dest"));
+        const h = rows[0].map(x=>x.toLowerCase());
+
+        // Column detection — match sheet headers: Destination Name, PTL Number, Zone, Lane, PTL Bin
+        const destCol = h.findIndex(x=>x.includes("destination")||x.includes("dest name")||x.includes("hub"));
+        const ptlCol  = h.findIndex(x=>x.includes("ptl")&&x.includes("number"));
+        const zoneCol = h.findIndex(x=>x==="zone"||x.includes("zone"));
+        const laneCol = h.findIndex(x=>x==="lane"||x.includes("lane"));
+        const binCol  = h.findIndex(x=>x.includes("ptl bin")||x.includes("bin"));
 
         zoneData = rows.slice(1)
-            .map(r => ({
-                hub:  (r[hubCol]  || "").trim(),
-                ptl:  (r[ptlCol]  || "").trim(),
-                zone: (r[zoneCol] || "").trim(),
-                lane: (r[laneCol] || "").trim(),
-                bin:  (r[binCol]  || "").trim()
+            .map(r=>({
+                hub:  (r[destCol]||"").trim(),
+                ptl:  (r[ptlCol] ||"").trim(),
+                zone: (r[zoneCol]||"").trim(),
+                lane: (r[laneCol]||"").trim(),
+                bin:  (r[binCol] ||"").trim()
             }))
-            .filter(d => d.zone.toLowerCase() === zone.toLowerCase() && d.lane !== "");
+            .filter(d=> d.zone.toLowerCase()===zone.toLowerCase() && d.hub!=="");
 
-        const uniqueLanes = [...new Set(zoneData.map(d => d.lane))];
-        const uniquePTLs  = [...new Set(zoneData.map(d => d.ptl).filter(Boolean))];
+        const uniquePTLs = [...new Set(zoneData.map(d=>d.ptl).filter(Boolean))];
 
-        document.getElementById("laneCount").textContent = uniqueLanes.length;
-        document.getElementById("ptlCount").textContent  = uniquePTLs.length;
+        document.getElementById("hubCount").textContent = zoneData.length;
+        document.getElementById("ptlCount").textContent = uniquePTLs.length;
 
-        // Lane suggestions
-        const dl = document.getElementById("laneSuggestions");
-        uniqueLanes.forEach(l => {
-            const o = document.createElement("option"); o.value = l; dl.appendChild(o);
+        // Hub autocomplete
+        const dl = document.getElementById("hubSuggestions");
+        [...new Set(zoneData.map(d=>d.hub))].forEach(hub=>{
+            const o=document.createElement("option"); o.value=hub; dl.appendChild(o);
         });
 
         // PTL buttons
         const grid = document.getElementById("ptlGrid");
-        if(uniquePTLs.length === 0){
-            grid.innerHTML = '<span style="color:#ef4444">No PTL data found.</span>';
-            return;
-        }
-        grid.innerHTML = "";
-        uniquePTLs.forEach(ptl => {
-            const btn = document.createElement("button");
-            btn.className = "ptl-btn";
-            btn.textContent = ptl;
-            btn.onclick = () => showPTLBins(ptl, btn);
+        grid.innerHTML="";
+        uniquePTLs.forEach(ptl=>{
+            const btn=document.createElement("button");
+            btn.className="ptl-btn";
+            const cnt=zoneData.filter(d=>d.ptl===ptl).length;
+            btn.innerHTML=`${ptl} <span style="opacity:.6;font-size:12px">(${cnt})</span>`;
+            btn.onclick=()=>showBins(ptl,btn);
             grid.appendChild(btn);
         });
 
     }catch(e){
-        showError("Data load failed. Please try again.");
+        showErr("Data load failed.");
     }
 }
 
-function searchLane(){
-    const query = document.getElementById("laneInput").value.trim().toLowerCase();
-    const box   = document.getElementById("laneResult");
-    if(!query){ box.innerHTML = '<div class="no-result">Lane ka naam daalo.</div>'; return; }
+function searchHub(){
+    const q   = document.getElementById("hubInput").value.trim().toLowerCase();
+    const box = document.getElementById("hubResult");
+    if(!q){ box.innerHTML='<div class="no-result">Hub naam daalo.</div>'; return; }
 
-    const matches = zoneData.filter(d => d.lane.toLowerCase().includes(query));
-    if(matches.length === 0){
-        box.innerHTML = '<div class="no-result">Koi lane nahi mili.</div>'; return;
-    }
+    const matches = zoneData.filter(d=>d.hub.toLowerCase().includes(q));
+    if(!matches.length){ box.innerHTML='<div class="no-result">Koi hub nahi mila.</div>'; return; }
 
-    const uniqueMatches = [...new Map(matches.map(d => [d.lane, d])).values()];
-    box.innerHTML = uniqueMatches.map(d => `
-        <div class="lane-result">
-            <div class="lane-result-label">Lane</div>
-            <div class="lane-result-value">${d.lane}</div>
-            <span class="ptl-tag" onclick="showPTLBins('${d.ptl}', null)">
-                PTL: ${d.ptl} &rarr; Click to see all bins
-            </span>
+    box.innerHTML = matches.map(d=>`
+        <div class="hub-result">
+            <div class="res-label">Hub / Destination</div>
+            <div class="res-value">${d.hub}</div>
+            <div class="res-row">
+                <span class="ptl-chip">PTL: ${d.ptl||"-"}</span>
+                <span class="bin-chip">Bin: ${d.bin||"-"}</span>
+                <span class="lane-chip">Lane: ${d.lane||"-"}</span>
+            </div>
         </div>
     `).join("");
 }
 
-function showPTLBins(ptl, btn){
-    // Highlight active button
-    document.querySelectorAll(".ptl-btn").forEach(b => b.classList.remove("active"));
+function showBins(ptl, btn){
+    document.querySelectorAll(".ptl-btn").forEach(b=>b.classList.remove("active"));
     if(btn) btn.classList.add("active");
 
-    const bins = zoneData.filter(d => d.ptl === ptl);
-    const section = document.getElementById("binSection");
+    const items = zoneData.filter(d=>d.ptl===ptl);
+    const sec   = document.getElementById("binSection");
+    if(!items.length){ sec.innerHTML='<div class="no-result">Koi data nahi.</div>'; return; }
 
-    if(bins.length === 0){
-        section.innerHTML = '<div class="no-result">Is PTL mein koi data nahi.</div>'; return;
-    }
-
-    let rows = "";
-    bins.forEach((d, i) => {
-        rows += `
+    let rows="";
+    items.forEach((d,i)=>{
+        rows+=`
         <tr>
             <td>${i+1}</td>
-            <td><span class="hub-name">${d.hub || "-"}</span></td>
-            <td><span class="bin-chip">${d.bin || "-"}</span></td>
-            <td>${d.lane || "-"}</td>
+            <td class="td-hub">${d.hub||"-"}</td>
+            <td><span class="td-bin">${d.bin||"-"}</span></td>
+            <td class="td-lane">${d.lane||"-"}</td>
         </tr>`;
     });
 
-    section.innerHTML = `
-        <div style="color:#22c55e;font-weight:700;margin-bottom:12px;font-size:15px;">
-            PTL ${ptl} — ${bins.length} Bins
-        </div>
+    sec.innerHTML=`
+        <div class="ptl-heading">PTL: ${ptl} &nbsp;|&nbsp; ${items.length} Hubs</div>
         <div class="bin-table-wrap">
         <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Hub / Destination</th>
-                    <th>Bin Number</th>
-                    <th>Lane</th>
-                </tr>
-            </thead>
+            <thead><tr><th>#</th><th>Hub / Destination</th><th>Bin</th><th>Lane</th></tr></thead>
             <tbody>${rows}</tbody>
-        </table>
-        </div>`;
+        </table></div>`;
 }
 
-function showError(msg){
-    document.getElementById("ptlGrid").innerHTML = `<span style="color:#ef4444">${msg}</span>`;
+function showErr(msg){
+    document.getElementById("ptlGrid").innerHTML=`<span style="color:#ef4444">${msg}</span>`;
 }
 
-// Enter key on lane search
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("laneInput").addEventListener("keyup", e => {
-        if(e.key === "Enter") searchLane();
+document.addEventListener("DOMContentLoaded",()=>{
+    document.getElementById("hubInput").addEventListener("keyup",e=>{
+        if(e.key==="Enter") searchHub();
     });
 });
 
